@@ -1,5 +1,4 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { Briefcase, Brain } from 'lucide-react'
 
 interface Experience {
   company: string
@@ -7,7 +6,6 @@ interface Experience {
   period: string
   location: string
   highlights: string[]
-  icon: React.ReactNode
 }
 
 const experiences: Experience[] = [
@@ -16,7 +14,6 @@ const experiences: Experience[] = [
     role: 'Student Internship Programme',
     period: 'May 2025 - Jul 2025',
     location: 'Singapore',
-    icon: <Brain size={20} />,
     highlights: [
       'Built frontend UI features, patched application bugs, and wrote automated unit tests for system verification',
       'Configured AWS CloudWatch dashboards for UAT environment monitoring (CPU, memory, disk utilisation)',
@@ -32,10 +29,9 @@ const experiences: Experience[] = [
   },
   {
     company: 'DND Trading & Services',
-    role: 'Administrative Intern',
+    role: 'E-commerce Associate',
     period: 'Apr 2024 - May 2024',
     location: 'Singapore',
-    icon: <Briefcase size={20} />,
     highlights: [
       'Handled over 100 customer-related issues daily, providing timely responses to meet service quality standards',
       'Coordinated with partner companies to track and manage deliveries, improving reliability and punctuality',
@@ -53,17 +49,12 @@ function ExperienceCard({ experience, delay }: { experience: Experience; delay: 
       className={`glass-card p-6 rounded-xl animate-on-scroll from-top ${isVisible ? 'visible' : ''}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="flex items-start gap-4 mb-4">
-        <div className="p-3 glass rounded-lg text-accent-primary">
-          {experience.icon}
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-text-primary">{experience.role}</h3>
-          <p className="text-accent-primary text-sm">{experience.company}</p>
-          <p className="text-text-secondary text-xs mt-1">
-            {experience.period} · {experience.location}
-          </p>
-        </div>
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-text-primary">{experience.role}</h3>
+        <p className="text-accent-primary text-sm">{experience.company}</p>
+        <p className="text-text-secondary text-xs mt-1">
+          {experience.period} · {experience.location}
+        </p>
       </div>
 
       <ul className="space-y-2">

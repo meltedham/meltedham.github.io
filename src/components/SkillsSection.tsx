@@ -1,12 +1,28 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { splitIntoWords } from '../hooks/useTextReveal'
 import {
   Code2,
   Database,
   Wrench,
   Layers,
-  Globe,
-  Terminal,
 } from 'lucide-react'
+
+// Animated word component with bounce effect
+function AnimatedText({ text, delay = 0 }: { text: string; delay?: number }) {
+  const words = splitIntoWords(text)
+  return (
+    <span className="whitespace-pre-wrap">
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <span className="inline-block word-bounce" style={{ animationDelay: `${delay + i * 50}ms` }}>
+            {word}
+          </span>
+          {i < words.length - 1 && <span className="inline-block word-bounce" style={{ animationDelay: `${delay + i * 50 + 20}ms` }}>&nbsp;</span>}
+        </span>
+      ))}
+    </span>
+  )
+}
 
 interface SkillCategory {
   title: string
@@ -54,7 +70,7 @@ export default function SkillsSection() {
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Technologies I work with to bring ideas to life.
+            <AnimatedText text="Technologies I work with to bring ideas to life." delay={0} />
           </p>
         </div>
 

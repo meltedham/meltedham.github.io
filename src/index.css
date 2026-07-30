@@ -487,3 +487,32 @@ body::before {
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
+
+/* Word/character reveal animations */
+@keyframes wordDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.9);
+    filter: blur(6px);
+  }
+  50% {
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.word-bounce {
+  display: inline-block;
+  opacity: 0;
+  animation: wordDrop 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Container for revealing multiple words */
+.word-container {
+  overflow: hidden;
+  display: inline-block;
+}

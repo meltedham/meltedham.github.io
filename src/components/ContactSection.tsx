@@ -1,8 +1,26 @@
 import { useState } from 'react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { splitIntoWords } from '../hooks/useTextReveal'
 import { Github, Linkedin, Send, Check, Loader2 } from 'lucide-react'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mwvgzkne'
+
+// Animated word component with bounce effect
+function AnimatedText({ text, delay = 0 }: { text: string; delay?: number }) {
+  const words = splitIntoWords(text)
+  return (
+    <span className="whitespace-pre-wrap">
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <span className="inline-block word-bounce" style={{ animationDelay: `${delay + i * 50}ms` }}>
+            {word}
+          </span>
+          {i < words.length - 1 && <span className="inline-block word-bounce" style={{ animationDelay: `${delay + i * 50 + 20}ms` }}>&nbsp;</span>}
+        </span>
+      ))}
+    </span>
+  )
+}
 
 const socialLinks = [
   {
@@ -84,8 +102,7 @@ export default function ContactSection() {
         </h2>
         <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
         <p className="text-text-secondary max-w-xl mx-auto mb-8">
-          Currently open to internship opportunities from 11 May 2027 to 31 August 2027.
-          Feel free to reach out if you'd like to connect!
+          <AnimatedText text="Currently open to internship opportunities from 11 May 2027 to 31 August 2027. Feel free to reach out if you'd like to connect!" delay={100} />
         </p>
 
         {/* Contact Form */}

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Github, Linkedin, Mail, Check, Copy } from 'lucide-react'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { Github, Linkedin, Send, Check, Loader2 } from 'lucide-react'
 
-const email = 'your.email@example.com'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mwvgzkne'
 
 const socialLinks = [
   {
@@ -11,75 +12,149 @@ const socialLinks = [
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com',
+    url: 'https://www.linkedin.com/in/rae-yen-yeow-558858353',
     icon: <Linkedin size={20} />,
-  },
-  {
-    name: 'Email',
-    url: `mailto:${email}`,
-    icon: <Mail size={20} />,
   },
 ]
 
 export default function ContactSection() {
-  const [copied, setCopied] = useState(false)
+  const [formState, setFormState] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 })
 
-  const handleCopyEmail = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('submitting')
+    setErrorMessage('')
+
     try {
-      await navigator.clipboard.writeText(email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea')
-      textArea.value = email
-      document.body.appendChild(textArea)
-      textArea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textArea)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          message: formState.message,
+        }),
+      })
+
+      console.log('Form response status:', response.status)
+
+      if (response.ok) {
+        setStatus('success')
+        setFormState({ name: '', email: '', message: '' })
+      } else {
+        const data = await response.json().catch(() => ({}))
+        console.log('Form error response:', data)
+        setErrorMessage(data.error || `Error ${response.status}: Please try again.`)
+        setStatus('error')
+      }
+    } catch (err) {
+      console.error('Form submit error:', err)
+      setErrorMessage('Failed to send message. Please try again.')
+      setStatus('error')
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormState((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-bg-secondary/50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section id="contact" className="py-20 lg:py-32">
+      <div
+        ref={ref}
+        className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll from-top ${isVisible ? 'visible' : ''}`}
+      >
         {/* Section Header */}
         <h2 className="text-3xl sm:text-4xl font-bold mb-4">
           <span className="text-text-primary">Get In </span>
           <span className="text-accent-primary">Touch</span>
         </h2>
         <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
-        <p className="text-text-secondary max-w-xl mx-auto mb-12">
-          I'm always open to discussing new opportunities, interesting projects,
-          or just having a chat about technology. Feel free to reach out!
+        <p className="text-text-secondary max-w-xl mx-auto mb-8">
+          Currently open to internship opportunities from 11 May 2027 to 31 August 2027.
+          Feel free to reach out if you'd like to connect!
         </p>
 
-        {/* Email with Copy */}
-        <div className="mb-12">
-          <button
-            onClick={handleCopyEmail}
-            className="group inline-flex items-center gap-3 px-6 py-4 bg-bg-secondary rounded-xl border border-border hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-0.5"
-            aria-label="Copy email address"
-          >
-            <Mail size={20} className="text-accent-primary" />
-            <span className="text-text-primary font-mono">{email}</span>
-            <span className="text-text-secondary text-sm group-hover:text-accent-primary transition-colors">
-              {copied ? (
-                <span className="inline-flex items-center gap-1 text-accent-green">
-                  <Check size={16} />
-                  Copied!
-                </span>
+        {/* Contact Form */}
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-12">
+          <div className="glass-card rounded-xl p-6 space-y-4">
+            <div>
+              <input
+                type="text"
+                name="name"
+                value={formState.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                required
+                className="w-full px-4 py-3 bg-orange-50 border border-orange-100 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-accent-primary transition-colors"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                name="email"
+                value={formState.email}
+                onChange={handleChange}
+                placeholder="Your email"
+                required
+                className="w-full px-4 py-3 bg-orange-50 border border-orange-100 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-accent-primary transition-colors"
+              />
+            </div>
+            <div>
+              <textarea
+                name="message"
+                value={formState.message}
+                onChange={handleChange}
+                placeholder="Your message"
+                required
+                rows={4}
+                className="w-full px-4 py-3 bg-orange-50 border border-orange-100 rounded-lg text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-accent-primary transition-colors resize-none"
+              />
+            </div>
+
+            {status === 'error' && (
+              <p className="text-red-400 text-sm">{errorMessage}</p>
+            )}
+
+            {status === 'success' && (
+              <div className="flex items-center justify-center gap-2 text-accent-green">
+                <Check size={18} />
+                <span>Message sent! I'll get back to you soon.</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === 'submitting'}
+              className="w-full px-6 py-3 bg-gradient-to-r from-violet-900 to-purple-900 text-white font-medium rounded-lg hover:opacity-90 transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {status === 'submitting' ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Sending...
+                </>
               ) : (
-                <span className="inline-flex items-center gap-1">
-                  <Copy size={16} />
-                  Copy
-                </span>
+                <>
+                  <Send size={18} />
+                  Send Message
+                </>
               )}
-            </span>
-          </button>
-        </div>
+            </button>
+          </div>
+        </form>
 
         {/* Social Links */}
         <div className="flex items-center justify-center gap-6">
@@ -87,9 +162,9 @@ export default function ContactSection() {
             <a
               key={link.name}
               href={link.url}
-              target={link.name === 'Email' ? undefined : '_blank'}
-              rel={link.name === 'Email' ? undefined : 'noopener noreferrer'}
-              className="p-3 bg-bg-secondary rounded-lg border border-border text-text-secondary hover:text-accent-primary hover:border-accent-primary/50 transition-all duration-200 hover:scale-110"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 glass-card rounded-lg text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
               aria-label={link.name}
             >
               {link.icon}

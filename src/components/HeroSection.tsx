@@ -1,4 +1,4 @@
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { Mouse, Github, User } from 'lucide-react'
 
 export default function HeroSection() {
   const scrollToSection = (href: string) => {
@@ -8,12 +8,51 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated background orb */}
+      {/* Animated background nebula clouds */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-primary/10 rounded-full blur-3xl animate-float" />
+        {/* Nebula cloud 1 - top left purple-pink */}
         <div
-          className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-accent-warm/10 rounded-full blur-3xl animate-float"
-          style={{ animationDelay: '-3s' }}
+          className="absolute top-1/4 -left-20 w-[500px] h-[400px] animate-float"
+          style={{
+            background: `
+              radial-gradient(ellipse 50% 60% at 40% 50%, rgba(180, 60, 150, 0.6) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 60% 40%, rgba(150, 50, 180, 0.5) 0%, transparent 45%),
+              radial-gradient(ellipse 40% 70% at 50% 60%, rgba(120, 40, 160, 0.4) 0%, transparent 50%)
+            `,
+            filter: 'blur(60px)',
+            opacity: 0.6,
+            borderRadius: '30% 70% 40% 60% / 60% 40% 70% 30%',
+          }}
+        />
+        {/* Nebula cloud 2 - bottom right orange */}
+        <div
+          className="absolute bottom-1/4 -right-20 w-[400px] h-[350px] animate-float"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255, 120, 50, 0.6) 0%, transparent 50%),
+              radial-gradient(ellipse 50% 60% at 40% 60%, rgba(200, 80, 50, 0.5) 0%, transparent 45%),
+              radial-gradient(ellipse 70% 40% at 60% 40%, rgba(255, 150, 80, 0.4) 0%, transparent 50%)
+            `,
+            filter: 'blur(55px)',
+            opacity: 0.6,
+            borderRadius: '60% 40% 70% 30% / 50% 70% 30% 60%',
+            animationDelay: '-3s',
+          }}
+        />
+        {/* Nebula cloud 3 - top right purple */}
+        <div
+          className="absolute top-1/3 -right-10 w-[350px] h-[300px] animate-float"
+          style={{
+            background: `
+              radial-gradient(ellipse 50% 50% at 50% 50%, rgba(80, 20, 120, 0.6) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 70% at 40% 40%, rgba(60, 20, 100, 0.5) 0%, transparent 45%),
+              radial-gradient(ellipse 40% 60% at 60% 60%, rgba(100, 40, 150, 0.4) 0%, transparent 50%)
+            `,
+            filter: 'blur(50px)',
+            opacity: 0.5,
+            borderRadius: '40% 60% 50% 50% / 70% 30% 60% 40%',
+            animationDelay: '-1.5s',
+          }}
         />
       </div>
 
@@ -28,35 +67,34 @@ export default function HeroSection() {
           className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-fade-up"
           style={{ animationDelay: '100ms' }}
         >
-          <span className="bg-gradient-to-r from-text-primary via-accent-primary to-accent-warm bg-clip-text text-transparent">
-            Your Name
+          <span className="bg-gradient-to-r from-accent-primary via-accent-warm to-accent-primary bg-clip-text text-transparent">
+            Yeow Rae Yen
           </span>
         </h1>
 
         {/* Role */}
         <p className="text-xl sm:text-2xl text-text-secondary mb-8 animate-fade-up" style={{ animationDelay: '200ms' }}>
-          Full-Stack Developer & UI/UX Enthusiast
+          Year 3 Computer Science Student · National University of Singapore (NUS)  
         </p>
 
         {/* Description */}
         <p className="text-lg text-text-secondary max-w-2xl mx-auto mb-12 animate-fade-up" style={{ animationDelay: '300ms' }}>
-          I build accessible, performant, and visually compelling web applications.
-          Focused on clean code and thoughtful user experiences.
+          Hands-on experience in software development, basic AI integration, SQL database design, and CTFs/hackathons. Specializing in AI/ML and cybersecurity. Seeking May – August 2027 internship opportunities in AI or Security. 
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: '400ms' }}>
           <button
             onClick={() => scrollToSection('#projects')}
-            className="px-8 py-3 bg-accent-primary text-bg-primary font-medium rounded-lg hover:bg-accent-primary/90 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent-primary/25"
+            className="px-8 py-3 glass-card text-text-primary font-medium rounded-lg hover:scale-105 transition-all duration-200 hover:-translate-y-0.5"
           >
             View Projects
           </button>
           <button
             onClick={() => scrollToSection('#contact')}
-            className="px-8 py-3 border border-accent-primary text-accent-primary font-medium rounded-lg hover:bg-accent-primary/10 transition-all duration-200 hover:-translate-y-0.5"
+            className="px-8 py-3 glass-card text-accent-primary font-medium rounded-lg hover:scale-105 transition-all duration-200 hover:-translate-y-0.5"
           >
-            Contact Me
+            Get In Touch
           </button>
         </div>
 
@@ -66,26 +104,19 @@ export default function HeroSection() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
+            className="p-3 glass-card rounded-lg text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
             aria-label="GitHub Profile"
           >
             <Github size={24} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/rae-yen-yeow-558858353"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
+            className="p-3 glass-card rounded-lg text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
             aria-label="LinkedIn Profile"
           >
-            <Linkedin size={24} />
-          </a>
-          <a
-            href="mailto:your.email@example.com"
-            className="text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
-            aria-label="Email Me"
-          >
-            <Mail size={24} />
+            <User size={24} />
           </a>
         </div>
 
@@ -96,7 +127,7 @@ export default function HeroSection() {
           style={{ animationDelay: '600ms' }}
           aria-label="Scroll to About section"
         >
-          <ArrowDown size={24} className="animate-bounce" />
+          <Mouse size={24} className="animate-bounce" />
         </button>
       </div>
     </section>

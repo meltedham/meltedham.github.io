@@ -1,4 +1,5 @@
-import { ExternalLink, Github } from 'lucide-react'
+import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { ExternalLink, Github, Trophy, Shield, Heart } from 'lucide-react'
 
 interface Project {
   title: string
@@ -7,38 +8,68 @@ interface Project {
   tags: string[]
   githubUrl: string
   liveUrl?: string
+  icon: React.ReactNode
+  achievement?: string
 }
 
 const projects: Project[] = [
   {
-    title: 'E-Commerce Platform',
-    description: 'A full-stack online store with cart functionality and payment integration.',
-    longDescription: 'Built with React and Node.js, featuring user authentication, product catalog, shopping cart, Stripe payment processing, and an admin dashboard for managing inventory.',
-    tags: ['React', 'Node.js', 'PostgreSQL', 'Stripe'],
+    title: 'Orbital — Singapore Mahjong Game',
+    description: 'A fully-featured Singapore Mahjong game with variable difficulty and interactive tutorial.',
+    longDescription: 'Built as a Software Engineering summer project using Unity and C#. Features include rule-based AI opponents with multiple difficulty levels, an interactive tutorial for new players, comprehensive gameplay mechanics, and collaborative Git-based development. Achieved Apollo level (2nd highest) for outstanding implementation.',
+    tags: ['Unity', 'C#', 'OpenGL', 'Git', 'JUnit Testing'],
     githubUrl: 'https://github.com',
-    liveUrl: 'https://example.com',
+    icon: <Trophy size={20} />,
+    achievement: 'Apollo Award (2nd Highest)',
   },
   {
-    title: 'Task Management App',
-    description: 'Collaborative project management tool with real-time updates.',
-    longDescription: 'Features include drag-and-drop kanban boards, team workspaces, real-time collaboration via WebSockets, task comments, and file attachments.',
-    tags: ['TypeScript', 'React', 'Socket.io', 'MongoDB'],
+    title: 'A.YCEP × Greycademy CTF',
+    description: 'Cybersecurity competition covering web exploitation, reverse engineering, and digital forensics.',
+    longDescription: 'Participated in an intensive Capture the Flag competition with workshops in Web Exploitation, Reverse Engineering, OS Security, Pwn, and Digital Forensics. Collaborated in a team of 4, qualifying for finals and finishing 8th out of 15 teams in the final round.',
+    tags: ['Cybersecurity', 'Web Exploitation', 'Reverse Engineering', 'CTF'],
     githubUrl: 'https://github.com',
+    icon: <Shield size={20} />,
+    achievement: '7th in Qualifiers, 8th in Finals',
   },
   {
-    title: 'Weather Dashboard',
-    description: 'Beautiful weather app with 7-day forecasts and location search.',
-    longDescription: 'Clean interface showing current conditions and weekly forecasts. Uses OpenWeatherMap API with geolocation support and local storage for saving favorite locations.',
-    tags: ['React', 'TypeScript', 'REST API'],
+    title: 'HackitRx Singapore 2025',
+    description: 'A mobile app prototype to help patients and caregivers manage chronic health conditions.',
+    longDescription: 'Collaborated in a team of 3 to design and build a React Native application for managing chronic health conditions. Features include medication tracking, food compatibility alerts, and health data monitoring. Designed UI/UX in Figma and implemented functionality in JavaScript/TypeScript.',
+    tags: ['React Native', 'JavaScript', 'TypeScript', 'Figma', 'Health Tech'],
     githubUrl: 'https://github.com',
-    liveUrl: 'https://example.com',
+    icon: <Heart size={20} />,
+  },
+  {
+    title: 'TikTok TechJam 2025',
+    description: 'NLP-powered review filtering system using transformer models.',
+    longDescription: 'Built in a team of 5, this Python-based system uses Hugging Face transformers and Scikit-learn to classify and filter Google Local Reviews. Processed real-world review data to extract meaningful insights and filter spam or low-quality reviews.',
+    tags: ['Python', 'Hugging Face', 'Scikit-learn', 'pandas', 'NLP'],
+    githubUrl: 'https://github.com',
+    icon: <Shield size={20} />,
   },
 ]
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, delay }: { project: Project; delay: number }) {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 })
+
   return (
-    <article className="group p-6 bg-bg-secondary rounded-xl border border-border hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20">
-      <h3 className="text-xl font-semibold text-text-primary mb-2 group-hover:text-accent-primary transition-colors">
+    <article
+      ref={ref}
+      className={`glass-card p-6 rounded-xl animate-on-scroll from-top ${isVisible ? 'visible' : ''}`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="flex items-start justify-between mb-3">
+        <div className="p-2 glass rounded-lg text-accent-primary">
+          {project.icon}
+        </div>
+        {project.achievement && (
+          <span className="text-xs px-2 py-1 glass rounded-full text-accent-warm">
+            {project.achievement}
+          </span>
+        )}
+      </div>
+
+      <h3 className="text-xl font-semibold text-text-primary mb-2">
         {project.title}
       </h3>
       <p className="text-text-secondary mb-4 text-sm leading-relaxed">
@@ -53,7 +84,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="px-3 py-1 text-xs font-mono bg-bg-tertiary text-text-secondary rounded-full border border-border group-hover:border-accent-primary/30 group-hover:text-accent-primary/80 transition-colors"
+            className="px-3 py-1 text-xs font-mono glass text-text-secondary rounded-full transition-colors"
           >
             {tag}
           </span>
@@ -90,26 +121,30 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function ProjectsSection() {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation({ threshold: 0.2 })
+
   return (
     <section id="projects" className="py-20 lg:py-32 bg-bg-secondary/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div
+          ref={headerRef}
+          className={`text-center mb-16 animate-on-scroll from-top ${headerVisible ? 'visible' : ''}`}
+        >
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="text-text-primary">Featured </span>
             <span className="text-accent-primary">Projects</span>
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
           <p className="text-text-secondary max-w-2xl mx-auto">
-            A selection of projects I've worked on. Each one represents a unique challenge
-            and an opportunity to learn something new.
+            From hackathon winners to cybersecurity competitions, here's a look at my recent work and achievements.
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+        <div className="grid md:grid-cols-2 gap-6">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} delay={index * 100} />
           ))}
         </div>
       </div>

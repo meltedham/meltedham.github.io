@@ -1,4 +1,4 @@
-import { Mouse, Github, User } from 'lucide-react'
+import { Github, Linkedin } from 'lucide-react'
 
 export default function HeroSection() {
   const scrollToSection = (href: string) => {
@@ -64,12 +64,10 @@ export default function HeroSection() {
 
         {/* Main heading */}
         <h1
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-fade-up"
+          className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-fade-up text-accent-primary"
           style={{ animationDelay: '100ms' }}
         >
-          <span className="bg-gradient-to-r from-accent-primary via-accent-warm to-accent-primary bg-clip-text text-transparent">
-            Yeow Rae Yen
-          </span>
+          Yeow Rae Yen
         </h1>
 
         {/* Role */}
@@ -92,7 +90,7 @@ export default function HeroSection() {
           </button>
           <button
             onClick={() => scrollToSection('#contact')}
-            className="px-8 py-3 glass-card text-accent-primary font-medium rounded-lg hover:scale-105 transition-all duration-200 hover:-translate-y-0.5"
+            className="px-8 py-3 glass-card text-text-primary font-medium rounded-lg hover:scale-105 transition-all duration-200 hover:-translate-y-0.5"
           >
             Get In Touch
           </button>
@@ -116,19 +114,10 @@ export default function HeroSection() {
             className="p-3 glass-card rounded-lg text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-110"
             aria-label="LinkedIn Profile"
           >
-            <User size={24} />
+            <Linkedin size={24} />
           </a>
         </div>
 
-        {/* Scroll indicator */}
-        <button
-          onClick={() => scrollToSection('#about')}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-text-secondary hover:text-accent-primary transition-all duration-200 animate-fade-up"
-          style={{ animationDelay: '600ms' }}
-          aria-label="Scroll to About section"
-        >
-          <Mouse size={24} className="animate-bounce" />
-        </button>
       </div>
     </section>
   )

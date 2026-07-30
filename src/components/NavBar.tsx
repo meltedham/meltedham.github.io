@@ -41,12 +41,10 @@ export default function NavBar() {
           <a
             href="#"
             className="text-xl font-semibold text-text-primary hover:text-accent-primary transition-colors"
-          >
-            Portfolio
-          </a>
+          />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -64,10 +62,27 @@ export default function NavBar() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg glass-card text-text-secondary hover:text-accent-primary transition-all duration-200 hover:scale-105"
+              className="relative w-10 h-10 flex items-center justify-center rounded-full glass-card overflow-hidden"
               aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              <span
+                className="absolute transition-all duration-500 ease-in-out"
+                style={{
+                  opacity: theme === 'dark' ? 1 : 0,
+                  transform: theme === 'dark' ? 'rotate(0deg) scale(1)' : 'rotate(90deg) scale(0)',
+                }}
+              >
+                <Sun className="text-orange-400" size={20} />
+              </span>
+              <span
+                className="absolute transition-all duration-500 ease-in-out"
+                style={{
+                  opacity: theme === 'dark' ? 0 : 1,
+                  transform: theme === 'dark' ? 'rotate(-90deg) scale(0)' : 'rotate(0deg) scale(1)',
+                }}
+              >
+                <Moon className="text-purple-400" size={20} />
+              </span>
             </button>
 
             {/* Mobile Menu Button */}

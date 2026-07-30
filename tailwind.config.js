@@ -24,6 +24,18 @@ export default {
         heading: ['Playfair Display', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
+      fontSize: {
+        'sm': '0.95rem',
+        'base': '1.1rem',
+        'lg': '1.2rem',
+        'xl': '1.35rem',
+        '2xl': '1.5rem',
+        '3xl': '1.875rem',
+        '4xl': '2.25rem',
+        '5xl': '3rem',
+        '6xl': '3.75rem',
+        '7xl': '4.5rem',
+      },
       animation: {
         'fade-up': 'fadeUp 0.4s ease-out forwards',
         'fade-left': 'fadeLeft 0.6s ease-out forwards',

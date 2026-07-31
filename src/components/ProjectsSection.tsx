@@ -153,7 +153,7 @@ export default function ProjectsSection() {
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
           <p className="text-text-secondary max-w-2xl mx-auto">
-            From hackathon winners to cybersecurity competitions, here's a look at my recent work and achievements.
+            Here's a look at my recent work and achievements.
           </p>
         </div>
 

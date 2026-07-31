@@ -44,12 +44,12 @@ const skillCategories: SkillCategory[] = [
   {
     title: 'Backend & Data',
     icon: <Database size={20} />,
-    skills: ['PostgreSQL', 'Database Systems', 'Node.js'],
+    skills: ['PostgreSQL', 'Database Systems', 'Node.js', 'Alembic'],
   },
   {
     title: 'Dev & Creative',
     icon: <Code2 size={20} />,
-    skills: ['Git', 'Gradle', 'JUnit', 'Blender', 'Figma'],
+    skills: ['Git', 'Gradle', 'JUnit', 'Blender', 'Figma', 'Music Theory'],
   },
 ]
 
@@ -70,7 +70,7 @@ export default function SkillsSection() {
           </h2>
           <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mx-auto mb-6" />
           <p className="text-text-secondary max-w-2xl mx-auto">
-            <AnimatedText text="Technologies I work with to bring ideas to life." delay={0} />
+            <AnimatedText text="Technologies I work with." delay={0} />
           </p>
         </div>
 
@@ -111,9 +111,6 @@ export default function SkillsSection() {
         <div className="mt-12 text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-text-secondary text-sm">
             <span>Languages: English (Fluent), Mandarin (Intermediate)</span>
-          </div>
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-text-secondary text-sm ml-4">
-            <span>Also: Technical Documentation, Music Theory</span>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ interface Particle {
   color: [number, number, number]
 }
 
-const CELL = 55
+const CELL = 35
 
 const DARK_PALETTE: [number, number, number][] = [
   [100, 20, 15],
@@ -36,7 +36,6 @@ const LIGHT_PALETTE: [number, number, number][] = [
 
 export default function MouseGradient() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: -1000, y: -1000 })
   const particlesRef = useRef<Particle[]>([])
   const timeRef = useRef(0)
 
@@ -83,7 +82,6 @@ export default function MouseGradient() {
       timeRef.current += 0.01
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      const mouse = mouseRef.current
       const particles = particlesRef.current
       const palette = getPalette()
 
@@ -106,27 +104,9 @@ export default function MouseGradient() {
         p.vx += Math.cos(angle) * 0.005
         p.vy += Math.sin(angle) * 0.005
 
-        // Mouse interaction - push in dark mode, attract in light mode
-        const dx = p.x - mouse.x
-        const dy = p.y - mouse.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        const isLight = document.querySelector('html')?.classList.contains('light')
-        if (dist < 260 && dist > 1) {
-          const force = (1 - dist / 260) * 8
-          if (isLight) {
-            // Attract - pull toward mouse (reveals dark background)
-            p.vx -= (dx / dist) * force
-            p.vy -= (dy / dist) * force
-          } else {
-            // Push away
-            p.vx += (dx / dist) * force
-            p.vy += (dy / dist) * force
-          }
-        }
-
         // Damp and move
-        p.vx *= 0.9
-        p.vy *= 0.9
+        p.vx *= 0.94
+        p.vy *= 0.94
         p.x += p.vx
         p.y += p.vy
 
@@ -139,7 +119,7 @@ export default function MouseGradient() {
 
       particles.forEach((p) => {
         const r = p.color[0], g = p.color[1], b = p.color[2]
-        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, CELL * 2.5)
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, CELL * 3)
         grad.addColorStop(0, `rgba(${r},${g},${b},0.85)`)
         grad.addColorStop(0.3, `rgba(${r},${g},${b},0.5)`)
         grad.addColorStop(1, `rgba(${r},${g},${b},0)`)
@@ -152,9 +132,6 @@ export default function MouseGradient() {
       animationId = requestAnimationFrame(animate)
     }
 
-    window.addEventListener('mousemove', (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
-    })
     window.addEventListener('resize', resize)
     animate()
 

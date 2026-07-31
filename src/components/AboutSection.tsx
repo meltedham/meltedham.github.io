@@ -1,29 +1,9 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { useTextReveal, splitIntoWords } from '../hooks/useTextReveal'
 import { GraduationCap, Award } from 'lucide-react'
-
-// Animated word component with bounce effect
-function AnimatedText({ text, className = '', staggerDelay = 60 }: { text: string; className?: string; staggerDelay?: number }) {
-  const words = splitIntoWords(text)
-  return (
-    <span className={`${className} whitespace-pre-wrap`}>
-      {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden">
-          <span className="inline-block word-bounce" style={{ animationDelay: `${i * staggerDelay}ms` }}>
-            {word}
-          </span>
-          {i < words.length - 1 && <span className="inline-block word-bounce" style={{ animationDelay: `${i * staggerDelay + 20}ms` }}>&nbsp;</span>}
-        </span>
-      ))}
-    </span>
-  )
-}
 
 export default function AboutSection() {
   const { ref: textRef, isVisible: textVisible } = useScrollAnimation({ threshold: 0.2 })
   const { ref: visualRef, isVisible: visualVisible } = useScrollAnimation({ threshold: 0.2 })
-  const { ref: para1Ref, isVisible: para1Visible } = useTextReveal({ threshold: 0.3, staggerDelay: 30, animationType: 'reveal' })
-  const { ref: para2Ref, isVisible: para2Visible } = useTextReveal({ threshold: 0.3, staggerDelay: 30, animationType: 'reveal' })
 
   return (
     <section id="about" className="py-20 lg:py-32">
@@ -40,13 +20,6 @@ export default function AboutSection() {
             </h2>
             <div className="w-16 h-1 bg-gradient-to-r from-accent-primary to-accent-warm rounded-full mb-8" />
 
-            <div ref={para1Ref} className={`text-text-secondary text-lg leading-relaxed mb-6 ${para1Visible ? '' : 'opacity-0'}`}>
-              <AnimatedText text="I'm a Year 3 Computer Science student at the National University of Singapore (NUS), currently maintaining a GPA of 4.07. I'm passionate about software development, cybersecurity, and creating impactful applications that solve real problems." />
-            </div>
-            <div ref={para2Ref} className={`text-text-secondary text-lg leading-relaxed mb-8 ${para2Visible ? '' : 'opacity-0'}`}>
-              <AnimatedText text="Beyond coding, I'm an avid learner who enjoys exploring new technologies, participating in hackathons, and contributing to my community through volunteering. I believe in writing code that's not just functional, but maintainable and accessible to everyone." />
-            </div>
-
             {/* Quick facts */}
             <div className="grid grid-cols-2 gap-4 mb-8">
               <div className="glass-card p-4 rounded-xl">
@@ -55,7 +28,7 @@ export default function AboutSection() {
                   <p className="text-text-secondary text-sm">Education</p>
                 </div>
                 <p className="text-accent-primary font-semibold">NUS CS</p>
-                <p className="text-text-secondary text-xs">2nd Class Honours</p>
+                <p className="text-text-secondary text-xs">Second Class Honours</p>
               </div>
               <div className="glass-card p-4 rounded-xl">
                 <div className="flex items-center gap-2 mb-1">

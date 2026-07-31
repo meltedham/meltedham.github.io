@@ -173,17 +173,17 @@ export default function FairyLights() {
   }, [trailPoints])
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden">
       {/* Purple-orange sunset gradient */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 120%, rgba(255, 100, 50, 0.5) 0%, transparent 60%),
-            radial-gradient(ellipse at 20% 80%, rgba(100, 40, 150, 0.45) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 70%, rgba(150, 60, 180, 0.4) 0%, transparent 45%),
-            radial-gradient(ellipse at 50% 50%, rgba(60, 20, 100, 0.3) 0%, transparent 60%),
-            linear-gradient(180deg, rgba(10, 5, 20, 0.9) 0%, rgba(50, 20, 80, 0.5) 40%, rgba(180, 80, 50, 0.4) 70%, rgba(255, 120, 50, 0.3) 100%)
+            radial-gradient(ellipse at 50% 120%, rgba(180, 60, 30, 0.4) 0%, transparent 60%),
+            radial-gradient(ellipse at 20% 80%, rgba(80, 30, 120, 0.35) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 70%, rgba(120, 40, 150, 0.3) 0%, transparent 45%),
+            radial-gradient(ellipse at 50% 50%, rgba(40, 15, 80, 0.25) 0%, transparent 60%),
+            linear-gradient(180deg, rgba(5, 2, 10, 0.95) 0%, rgba(30, 10, 60, 0.5) 40%, rgba(120, 50, 30, 0.35) 70%, rgba(180, 70, 40, 0.25) 100%)
           `,
         }}
       />

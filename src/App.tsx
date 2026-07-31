@@ -7,10 +7,12 @@ import SkillsSection from './components/SkillsSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import FairyLights from './components/FairyLights'
+import MouseGradient from './components/MouseGradient'
 
 function App() {
   return (
     <div className="min-h-screen bg-bg-primary relative">
+      <MouseGradient />
       <FairyLights />
       <NavBar />
       <main className="relative z-10">
